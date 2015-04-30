@@ -14,7 +14,7 @@
     "typescript": "^1.5.0-alpha"
   },
   "dependencies": {
-    "quinn": "^3.0.1",
+    "quinn": "^3.1.0",
     "wegweiser": "^3.2.1"
   }
 }

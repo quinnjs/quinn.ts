@@ -2,8 +2,8 @@
 /// <reference path='typings/quinn/quinn.d.ts' />
 import {createServer} from 'http';
 
-import {default as quinn} from 'quinn';
-import {json, default as respond} from 'quinn/respond';
+import {createApp} from 'quinn';
+import {json, respond} from 'quinn/respond';
 import {GET, createRouter} from 'wegweiser';
 
 class MyResource {
@@ -19,7 +19,7 @@ class MyResource {
 }
 
 const router = createRouter(MyResource);
-const server = createServer(quinn(router));
+const server = createServer(createApp(router));
 server.listen(8000, () => {
 	console.log('Listening.');
 });

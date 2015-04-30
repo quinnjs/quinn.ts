@@ -4,23 +4,8 @@ declare module Quinn {
 	interface IRequest {
 		method: string;
 		url: string;
+		headers: { [key: string]: string; };
 	}
-
-	interface IRequestHandler {
-		(request: IRequest): any;
-	}
-}
-
-declare module 'quinn' {
-	import http = require('http');
-
-	function createApp(handler: Quinn.IRequestHandler): (request: http.ServerRequest, response: http.ServerResponse) => void;
-
-	export default createApp;
-}
-
-declare module 'quinn/respond' {
-	import http = require('http');
 
 	interface VirtualResponse {
 		body(b: any): VirtualResponse;
@@ -28,16 +13,27 @@ declare module 'quinn/respond' {
 		header(name: string, value: any): VirtualResponse;
 	}
 
+	interface IRequestHandler {
+		(request: IRequest): VirtualResponse;
+	}
+}
+
+declare module 'quinn' {
+	import http = require('http');
+
+	export function createApp(handler: Quinn.IRequestHandler): (request: http.ServerRequest, response: http.ServerResponse) => void;
+	export default createApp;
+}
+
+declare module 'quinn/respond' {
 	interface VirtualResponseOptions {
 		body?: any;
 		statusCode?: number;
 		headers?: any;
 	}
 
-	function respond(options?: VirtualResponseOptions): VirtualResponse;
-
-	export function json(data: any): VirtualResponse;
-
+	export function respond(options?: VirtualResponseOptions): Quinn.VirtualResponse;
+	export function json(data: any): Quinn.VirtualResponse;
 	export default respond;
 }
 
