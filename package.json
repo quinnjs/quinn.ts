@@ -1,0 +1,20 @@
+{
+  "name": "quinn.ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "tsc --module commonjs --target ES5 server.ts",
+    "start": "node --harmony_classes server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^1.5.0-alpha"
+  },
+  "dependencies": {
+    "quinn": "^3.0.1",
+    "wegweiser": "^3.2.1"
+  }
+}
