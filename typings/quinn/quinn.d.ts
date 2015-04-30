@@ -14,7 +14,9 @@ declare module Quinn {
 declare module 'quinn' {
 	import http = require('http');
 
-	export default function(IRequestHandler): (request: http.ServerRequest, response: http.ServerResponse) => void;
+	function createApp(handler: Quinn.IRequestHandler): (request: http.ServerRequest, response: http.ServerResponse) => void;
+
+	export default createApp;
 }
 
 declare module 'quinn/respond' {
@@ -41,16 +43,13 @@ declare module 'quinn/respond' {
 
 declare module 'wegweiser' {
 	module wegweiser {
-		interface IRequestHandler {
-			(req: any): any;
-		}
 		function GET(string): any;
 		function PUT(string): any;
 		function POST(string): any;
 		function PATCH(string): any;
 		function DELETE(string): any;
 		function HEAD(string): any;
-		function createRouter(...any): IRequestHandler;
+		function createRouter(...any): Quinn.IRequestHandler;
 	}
 
 	export = wegweiser;
